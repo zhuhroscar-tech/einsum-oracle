@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "einsum-oracle"
+version = "0.1.0"
+description = "Independent exact-DP oracle that checks numpy.einsum_path's chosen contraction order against the true minimum FLOP count"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "zhuhroscar-tech" }]
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.24"]
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Testing",
+]
+
+[project.urls]
+Homepage = "https://github.com/zhuhroscar-tech/einsum-oracle"
+
+[project.scripts]
+einsum-oracle = "einsum_oracle.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
