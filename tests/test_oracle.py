@@ -24,6 +24,33 @@ def test_parse_subscripts_rejects_ellipsis():
         parse_subscripts("i...,i...->i...")
 
 
+def test_parse_subscripts_rejects_output_label_absent_from_inputs():
+    """numpy.einsum itself rejects this ('never appeared in an input');
+    the oracle must reject it too instead of silently returning a bogus
+    plan for an expression numpy would never accept as valid, see
+    numpy.einsum("ij,jk->iz", ...) -> ValueError."""
+    with pytest.raises(ValueError, match="never appear"):
+        parse_subscripts("ij,jk->iz")
+
+
+def test_parse_subscripts_rejects_repeated_output_label():
+    """numpy.einsum rejects a repeated output label (e.g. '->ii') in
+    explicit-output mode; the oracle must match that validation rather
+    than silently computing a meaningless trivial-cost plan."""
+    with pytest.raises(ValueError, match="more than once"):
+        parse_subscripts("ij->ii")
+
+
+def test_optimal_contraction_rejects_output_label_absent_from_inputs():
+    with pytest.raises(ValueError, match="never appear"):
+        optimal_contraction("ij,jk->iz", [(3, 4), (4, 5)])
+
+
+def test_optimal_contraction_rejects_repeated_output_label():
+    with pytest.raises(ValueError, match="more than once"):
+        optimal_contraction("ij->ii", [(3, 3)])
+
+
 def test_two_operand_matmul_is_trivial():
     plan = optimal_contraction("ij,jk->ik", [(3, 4), (4, 5)])
     assert plan.total_flops == 3 * 4 * 5

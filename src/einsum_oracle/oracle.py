@@ -56,6 +56,33 @@ def parse_subscripts(subscripts: str) -> Tuple[List[Labels], Labels]:
     lhs, rhs = subscripts.split("->")
     operand_labels = [tuple(s.strip()) for s in lhs.split(",")]
     output_labels = tuple(rhs.strip())
+
+    # Match numpy.einsum's own explicit-output validation: every output
+    # label must actually appear in at least one input, and no output
+    # label may repeat. Without this, optimal_contraction() below silently
+    # produces a "plan" for an expression numpy itself would reject
+    # (an absent output label was treated as contributing zero FLOPs and
+    # vanishing from the result entirely; a repeated output label such as
+    # '->ii' hit the popcount==1 trivial base case and returned cost 0 with
+    # no validation at all) -- a structurally wrong, undetectable-looking
+    # answer rather than an honest error.
+    input_label_set = {label for labels in operand_labels for label in labels}
+    seen_output_labels: set = set()
+    for label in output_labels:
+        if label not in input_label_set:
+            raise ValueError(
+                f"output subscript label {label!r} never appears in any "
+                f"input operand of {subscripts!r} (numpy.einsum rejects "
+                f"this too)"
+            )
+        if label in seen_output_labels:
+            raise ValueError(
+                f"output subscript label {label!r} appears more than once "
+                f"in {subscripts!r} (numpy.einsum rejects a repeated "
+                f"output label too)"
+            )
+        seen_output_labels.add(label)
+
     return operand_labels, output_labels
 
 
