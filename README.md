@@ -4,6 +4,8 @@ An independent, exact dynamic-programming oracle for tensor-contraction
 order, used to check whether `numpy.einsum_path`'s `optimize='optimal'`
 search actually found the true minimum-FLOP contraction plan.
 
+![einsum-oracle example output](docs/images/example-output.png)
+
 ## Why this exists
 
 [numpy/numpy#11825](https://github.com/numpy/numpy/issues/11825) (open
