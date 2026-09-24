@@ -112,6 +112,12 @@ networks).
 - Ellipsis (`...`) and implicit-output subscripts are not supported —
   only explicit `"...,...->..."` subscript strings.
 
+## Project status
+
+- License: [MIT](LICENSE)
+- Release history: [CHANGELOG.md](CHANGELOG.md)
+- CI builds and smoke-tests the wheel and source distribution on every push.
+
 ## Development
 
 ```bash
