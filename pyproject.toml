@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "einsum-oracle"
-version = "0.1.4"
+version = "0.1.5"
 description = "Independent exact-DP oracle that checks numpy.einsum_path's chosen contraction order against the true minimum FLOP count"
 readme = "README.md"
 license = "MIT"
@@ -24,6 +24,8 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/zhuhroscar-tech/einsum-oracle"
+Issues = "https://github.com/zhuhroscar-tech/einsum-oracle/issues"
+Changelog = "https://github.com/zhuhroscar-tech/einsum-oracle/blob/main/CHANGELOG.md"
 
 [project.scripts]
 einsum-oracle = "einsum_oracle.cli:main"

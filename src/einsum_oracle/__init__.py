@@ -1,2 +1,2 @@
 """einsum-oracle: independent DP verification of einsum contraction paths."""
-__version__ = "0.1.4"
+__version__ = "0.1.5"

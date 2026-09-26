@@ -48,10 +48,19 @@ def test_changelog_documents_current_version():
 def test_ci_builds_distribution_artifacts_and_checksums():
     ci = _read(".github/workflows/ci.yml")
 
+    assert 'tags: ["v*"]' in ci
     assert "python -m build" in ci
     assert "sha256sum * > SHA256SUMS.txt" in ci
     assert "actions/upload-artifact@v4" in ci
     assert "path: dist/" in ci
+
+
+def test_package_metadata_links_maintenance_resources():
+    pyproject = _read("pyproject.toml")
+
+    assert 'Homepage = "https://github.com/zhuhroscar-tech/einsum-oracle"' in pyproject
+    assert 'Issues = "https://github.com/zhuhroscar-tech/einsum-oracle/issues"' in pyproject
+    assert 'Changelog = "https://github.com/zhuhroscar-tech/einsum-oracle/blob/main/CHANGELOG.md"' in pyproject
 
 
 def test_codeql_scans_python_on_push_and_schedule():

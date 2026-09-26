@@ -2,6 +2,11 @@
 
 All notable source releases for `einsum-oracle` are tracked here.
 
+## v0.1.5 - 2026-09-26
+
+- Added package metadata links for the project homepage, issue tracker, and changelog so built distributions point users to maintenance resources.
+- Made release-tag CI coverage explicit for `v*` tags and added repository-contract coverage for that release workflow wiring.
+
 ## v0.1.4 - 2026-09-24
 
 - Added repository-contract coverage for required project files, README release links, CI artifact generation, CodeQL, and package/runtime version parity.
